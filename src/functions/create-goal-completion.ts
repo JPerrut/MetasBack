@@ -12,6 +12,7 @@ export async function createGoalCompletion({
 }: createGoalCompletionRequest) {
   const firstDayOfWeek = dayjs().startOf('week').toDate()
   const lastDayOfWeek = dayjs().endOf('week').toDate()
+
   const goalCompletionCounts = db.$with('goal_completion_counts').as(
     db
       .select({
