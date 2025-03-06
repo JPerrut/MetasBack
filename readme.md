@@ -51,7 +51,7 @@ Este é um aplicativo desenvolvido para o gerenciamento eficiente de metas, perm
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/JPerrut/MetasBack.git
    ```
 2. Acesse a pasta do projeto:
    ```bash
