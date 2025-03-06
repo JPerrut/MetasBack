@@ -1,23 +1,23 @@
-import dayjs from 'dayjs'
-import { db } from '../db'
-import { goalCompletions, goals } from '../db/schema'
-import { and, count, eq, gte, lte, sql } from 'drizzle-orm'
+import dayjs from "dayjs";
+import { db } from "../db";
+import { goalCompletions, goals } from "../db/schema";
+import { and, count, eq, gte, lte, sql } from "drizzle-orm";
 
 interface createGoalCompletionRequest {
-  goalId: string
+  goalId: string;
 }
 
 export async function createGoalCompletion({
   goalId,
 }: createGoalCompletionRequest) {
-  const firstDayOfWeek = dayjs().startOf('week').toDate()
-  const lastDayOfWeek = dayjs().endOf('week').toDate()
+  const firstDayOfWeek = dayjs().startOf("week").toDate();
+  const lastDayOfWeek = dayjs().endOf("week").toDate();
 
-  const goalCompletionCounts = db.$with('goal_completion_counts').as(
+  const goalCompletionCounts = db.$with("goal_completion_counts").as(
     db
       .select({
         goalId: goalCompletions.goalId,
-        completionCount: count(goalCompletions.id).as('completionCount'),
+        completionCount: count(goalCompletions.id).as("completionCount"),
       })
       .from(goalCompletions)
       .where(
@@ -28,7 +28,7 @@ export async function createGoalCompletion({
         )
       )
       .groupBy(goalCompletions.goalId)
-  )
+  );
 
   const result = await db
     .with(goalCompletionCounts)
@@ -41,21 +41,21 @@ export async function createGoalCompletion({
     .from(goals)
     .leftJoin(goalCompletionCounts, eq(goalCompletionCounts.goalId, goals.id))
     .where(eq(goals.id, goalId))
-    .limit(1)
+    .limit(1);
 
-  const { completionCount, desiredWeeklyFrequency } = result[0]
+  const { completionCount, desiredWeeklyFrequency } = result[0];
 
   if (completionCount >= desiredWeeklyFrequency) {
-    throw new Error('Goal already completed this week!')
+    throw new Error("Goal already completed this week!");
   }
 
   const insertResult = await db
     .insert(goalCompletions)
     .values({ goalId })
-    .returning()
-  const goalCompletion = insertResult[0]
+    .returning();
+  const goalCompletion = insertResult[0];
 
   return {
     goalCompletion,
-  }
+  };
 }
