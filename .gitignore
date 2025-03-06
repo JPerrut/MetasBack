@@ -19,3 +19,6 @@ Thumbs.db
 # EditorConfig e IDEs
 .vscode/
 .idea/
+
+.env
+docker-compose.yml
