@@ -105,6 +105,44 @@ Este é um aplicativo desenvolvido para o gerenciamento eficiente de metas, perm
    npx drizzle-kit studio
    ```
 
+## Rotas para Teste
+
+Abaixo estão os caminhos disponíveis para testar as rotas da aplicação localmente:
+
+### Metas
+
+- **Listar todas as metas**:
+
+  ```bash
+  GET http://localhost:3333/goals
+  ```
+
+- **Listar metas pendentes**:
+  ```bash
+  GET http://localhost:3333/pending-goals
+  ```
+
+### Completions
+
+- **Listar todas as completions**:
+  ```bash
+  GET http://localhost:3333/completions
+  ```
+- **Criar uma nova completion**:
+  ```bash
+  POST http://localhost:3333/completions
+  ```
+
+### Como Testar
+
+Você pode testar as rotas usando ferramentas como [Postman](https://www.postman.com/), [Insomnia](https://insomnia.rest/) ou diretamente no terminal com `curl`.
+
+#### Exemplo com `curl`:
+
+```bash
+curl -X GET http://localhost:3333/goals
+```
+
 ## Contribuição
 
 ### Contribuições são bem-vindas! Siga os passos abaixo:
